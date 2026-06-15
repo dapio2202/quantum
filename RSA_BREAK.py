@@ -316,11 +316,16 @@ def extract_order_candidates(counts: dict, num_control: int, N: int = 15):
 
 
 def factors_from_order(a: int, N: int, r: int):
-    #Given an order r of a mod N, attempts to recover a non-trivial factor of N.
-    if r is None or r % 2 != 0:
+    # 1. Strict validation: r must be a valid order for a mod N
+    if r is None or r % 2 != 0 or pow(a, r, N) != 1:
         return None
 
+    # 2. Compute the square root of the identity
     experimental_r = pow(a, r // 2, N)
+
+    # 3. Check for trivial roots (if x == N-1, gcds will fail to find non-trivial factors)
+    if (experimental_r + 1) % N == 0:
+        return None
 
     f1 = gcd(experimental_r - 1, N)
     f2 = gcd(experimental_r + 1, N)
