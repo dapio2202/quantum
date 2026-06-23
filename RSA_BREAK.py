@@ -9,28 +9,13 @@ Setup (first time using it, do the following lines in the terminal):
 
     QiskitRuntimeService.save_account(
         channel="ibm_quantum_platform",
-        token="YOUR_44_CHAR_API_KEY",
-        instance="YOUR_INSTANCE_CRN",
+        token="API Token",
+        instance="CRN TOKEN",
         set_as_default=True,
         overwrite=True,
     )
 
     exit()
-
-
-To check if worked correcly:
-
-    python 
-
-    from qiskit_ibm_runtime import QiskitRuntimeService
-
-    service = QiskitRuntimeService()
-    
-    print([b.name for b in service.backends(operational=True, simulator=False)]) 
-
-    exit()
-
-    It should give something like: ['ibm_kingston', 'ibm_marrakesh', 'ibm_fez']
 
 """
 
@@ -408,7 +393,7 @@ def main():
     print(f"  Recovered word       = '{recovered_classically}'")
 
     if recovered_classically.upper() == PLAINTEXT_WORD.upper():
-                aux="YES ✓"
+                aux="YES"
     else:
             aux = "No x"
     print(f"  Match with original  = {aux}")
@@ -471,7 +456,7 @@ def main():
         r = c['r']
         valid_str = ""
         if (r is not None and r % 2 == 0 and pow(2, r, 15) == 1):
-            valid_str = "YES ✓"
+            valid_str = "YES"
         elif r is not None and r % 2 != 0:
             valid_str = "odd"
         else:
@@ -502,14 +487,15 @@ def main():
         )
 
     p_rec, q_rec = recovered_factors
-    x_val = pow(2, chosen_order // 2, 15)
+
+    x_val = pow(2, chosen_order//2, 15)
 
     print()
     print(f"  Chosen order         r  => {chosen_order}")
-    print(f"  a^(r/2) mod N           => 2^{chosen_order//2} mod 15 = {x_val}")
+    print(f"  a^(r/2) mod N           => 2^{x_val} mod 15 = {x_val}")
     print(f"  gcd(x-1, N)             => gcd({x_val-1}, 15) = {gcd(x_val-1, 15)}")
     print(f"  gcd(x+1, N)             => gcd({x_val+1}, 15) = {gcd(x_val+1, 15)}")
-    aux = "= YES ✓"
+    aux = "= YES"
     if  p_rec * q_rec != 15:
         aux= "≠ NO ✗" 
     print(f"  Recovered factors       => {p_rec} × {q_rec} = {p_rec * q_rec} {aux}")
@@ -523,7 +509,7 @@ def main():
     print(f"  Known public exponent e  = {cracked_rsa.e}")
     
     if cracked_rsa.d == rsa.d:
-        aux = "YES ✓"
+        aux = "YES"
     else:
         aux="NO ✗"
     print(f"  Recovered private key d  = {cracked_rsa.d}  (matches original: {aux})")
@@ -535,7 +521,7 @@ def main():
     print(f"  Decrypted word           = '{recovered_word}'")
     match = ""
     if recovered_word.upper() == PLAINTEXT_WORD.upper():
-        match="YES ✓"
+        match="YES"
     else:
         match="NO ✗"
     print(f"  Matches original         = {match}")
